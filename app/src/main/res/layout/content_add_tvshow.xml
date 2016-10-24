@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_add_tvshow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="local.ebc.tvtracker2.activity.AddTvshowActivity"
+    tools:showIn="@layout/activity_add_tvshow"
+    android:gravity="center_horizontal">
+<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/editTextTitle"
+        android:hint="Name" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/editTextDescription"
+        android:hint="Description" />
+    <ImageView
+        android:layout_width="300dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageView"
+        android:layout_height="250dp" />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:text="#Episodes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_label_np"
+        android:layout_marginRight="@dimen/margin_label_np"
+        android:id="@+id/textView2" /><TextView
+    android:text="#Seasons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_label_np"
+    android:layout_marginRight="@dimen/margin_label_np"
+    android:id="@+id/textView3" /><TextView
+    android:text="Duration (m)"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_label_np"
+    android:layout_marginRight="@dimen/margin_label_np"
+    android:id="@+id/textView4" />
+</LinearLayout>
+
+
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <NumberPicker
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/np_episodes"
+        android:isScrollContainer="true"
+        android:clickable="false" />    <NumberPicker
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/np_seasons"
+        android:isScrollContainer="true"
+        android:clickable="false" />    <NumberPicker
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/np_duration"
+        android:isScrollContainer="true"
+        android:clickable="false" />
+
+</LinearLayout>
+
+</LinearLayout>
