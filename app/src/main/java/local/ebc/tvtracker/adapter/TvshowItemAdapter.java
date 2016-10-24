@@ -3,18 +3,25 @@ package local.ebc.tvtracker.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.List;
 
 import local.ebc.tvtracker.activity.DetailsActivity;
+import local.ebc.tvtracker.activity.MainActivity;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.R;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 /**
  * Created by ebc on 19.10.2016.
@@ -22,7 +29,7 @@ import local.ebc.tvtracker.R;
 
 public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.ViewHolder> {
     private final List<Tvshow> tvshowArrayList;
-    final Context context;
+    private final Context context;
     File imgThumbnail;
 
     public TvshowItemAdapter(List<Tvshow> list, Context context){
@@ -88,6 +95,7 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
             Intent intent = new Intent(context, DetailsActivity.class);
 // Get the correct game based on which listitem got clicked, and put it as parameter in the intent
             Tvshow tvshow = getItem(getAdapterPosition());
+            Log.d("ITEM", Integer.toString(getAdapterPosition()));
             intent.putExtra("selectedTvshow", tvshow);
 // Open GameDetailsActivity
             context.startActivity(intent);
@@ -97,7 +105,8 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
         public void populateRow(Tvshow tvshow) {
             title.setText(tvshow.getTitle());
             description.setText(tvshow.getDescription());
-
+            status.setText("Status: Watching");
+            Glide.with(itemView.getContext()).load(tvshow.getImgPath()).into(icon);
            /* Bitmap bmp = BitmapFactory.decodeFile(tvshow.getImgPath());
             icon.setImageBitmap(bmp);
            imgThumbnail = new File(tvshow.getImgPath());

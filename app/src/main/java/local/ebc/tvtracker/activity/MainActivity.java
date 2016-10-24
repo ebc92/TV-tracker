@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               Intent intent = new Intent(MainActivity.this, AddTvshowActivity.class);
+                startActivityForResult(intent, 11);
             }
         });
 
@@ -50,10 +50,8 @@ public class MainActivity extends AppCompatActivity {
         tvshowListView.setLayoutManager(mLayoutManager);
         tvshowListView.setHasFixedSize(true);
         adapter = new TvshowItemAdapter(tvshowList, this);
-        Tvshow tvshow = new Tvshow(0, "Stranger Things", "Sci-Fi", "path", 1, 1, 1);
         tvshowListView.setAdapter(adapter);
-        tvshowList.add(tvshow);
-        adapter.notifyDataSetChanged();
+        tvshowListRefresh();
     }
     private void tvshowListRefresh(){
         datasource = new DataSource(this);
@@ -68,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 11 && resultCode == RESULT_OK) {
             long tvshowId = data.getLongExtra(EXTRA_TVSHOW_ID, -1);
             if (tvshowId != -1) {
+                datasource = new DataSource(this);
                 Tvshow tvshow = datasource.getTvshow(tvshowId);
                 tvshowList.add(tvshow);
                 tvshowListRefresh();
