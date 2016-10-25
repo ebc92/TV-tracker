@@ -8,6 +8,7 @@
         <item>Watching</item>
         <item>Stalled</item>
         <item>Dropped</item>
+        <item>Finished</item>
     </string-array>
-    <string name="title_activity_tvshow_details">TvshowDetailsActivity</string>
+    <string name="title_activity_tvshow_details">TV Show details</string>
 </resources>
