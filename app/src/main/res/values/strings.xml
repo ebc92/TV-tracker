@@ -2,5 +2,12 @@
     <string name="app_name">TVtracker</string>
     <string name="action_delete_all">Delete All</string>
     <string name="action_delete_tvshow">Delete TV Show</string>
-    <string name="title_activity_update_tvshow">UpdateTvshowActivity</string>
+    <string name="title_activity_add_tvshow">Add new TV Show</string>
+    <string-array name="tvshow_status">
+        <item>Want to watch</item>
+        <item>Watching</item>
+        <item>Stalled</item>
+        <item>Dropped</item>
+    </string-array>
+    <string name="title_activity_tvshow_details">TvshowDetailsActivity</string>
 </resources>

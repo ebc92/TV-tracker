@@ -20,7 +20,7 @@ public class DataSource {
 
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] tvshowAllColumns = { MySQLiteHelper.COLUMN_TVSHOW_ID, MySQLiteHelper.COLUMN_TVSHOW, MySQLiteHelper.COLUMN_TVSHOW_DESCRIPTION, MySQLiteHelper.COLUMN_TVSHOW_IMGPATH, MySQLiteHelper.COLUMN_TVSHOW_EPISODES, MySQLiteHelper.COLUMN_TVSHOW_SEASONS, MySQLiteHelper.COLUMN_TVSHOW_DURATION};
+    private String[] tvshowAllColumns = { MySQLiteHelper.COLUMN_TVSHOW_ID, MySQLiteHelper.COLUMN_TVSHOW, MySQLiteHelper.COLUMN_TVSHOW_DESCRIPTION, MySQLiteHelper.COLUMN_TVSHOW_IMGPATH, MySQLiteHelper.COLUMN_TVSHOW_RATING, MySQLiteHelper.COLUMN_TVSHOW_DATEADDED, MySQLiteHelper.COLUMN_TVSHOW_STATUS};
 
     public DataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -44,9 +44,9 @@ public class DataSource {
         values.put(MySQLiteHelper.COLUMN_TVSHOW, tvshow.getTitle());
         values.put(MySQLiteHelper.COLUMN_TVSHOW_DESCRIPTION, tvshow.getDescription());
         values.put(MySQLiteHelper.COLUMN_TVSHOW_IMGPATH, tvshow.getImgPath());
-        values.put(MySQLiteHelper.COLUMN_TVSHOW_EPISODES, tvshow.getEpisodes());
-        values.put(MySQLiteHelper.COLUMN_TVSHOW_SEASONS, tvshow.getSeasons());
-        values.put(MySQLiteHelper.COLUMN_TVSHOW_DURATION, tvshow.getDuration());
+        values.put(MySQLiteHelper.COLUMN_TVSHOW_RATING, tvshow.getRating());
+        values.put(MySQLiteHelper.COLUMN_TVSHOW_DATEADDED, tvshow.getDateadded());
+        values.put(MySQLiteHelper.COLUMN_TVSHOW_STATUS, tvshow.getStatus());
         long insertId = database.insert(MySQLiteHelper.TABLE_TVSHOWS, null, values);
         if(database.isOpen()) {
             close();
@@ -76,9 +76,9 @@ public class DataSource {
         args.put(MySQLiteHelper.COLUMN_TVSHOW, tvshow.getTitle());
         args.put(MySQLiteHelper.COLUMN_TVSHOW_DESCRIPTION, tvshow.getDescription());
         args.put(MySQLiteHelper.COLUMN_TVSHOW_IMGPATH, tvshow.getImgPath());
-        args.put(MySQLiteHelper.COLUMN_TVSHOW_EPISODES, tvshow.getEpisodes());
-        args.put(MySQLiteHelper.COLUMN_TVSHOW_SEASONS, tvshow.getSeasons());
-        args.put(MySQLiteHelper.COLUMN_TVSHOW_DURATION, tvshow.getDuration());
+        args.put(MySQLiteHelper.COLUMN_TVSHOW_RATING, tvshow.getRating());
+        args.put(MySQLiteHelper.COLUMN_TVSHOW_DATEADDED, tvshow.getDateadded());
+        args.put(MySQLiteHelper.COLUMN_TVSHOW_STATUS, tvshow.getStatus());
 
         database.update(MySQLiteHelper.TABLE_TVSHOWS, args, MySQLiteHelper.COLUMN_TVSHOW_ID + "=?", new String[] { Long.toString(tvshow.getId()) });
         if (database.isOpen())
@@ -107,10 +107,10 @@ public class DataSource {
             String tvshowTitle = cursor.getString(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW));
             String tvshowDescription = cursor.getString(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_DESCRIPTION));
             String tvshowPath = cursor.getString(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_IMGPATH));
-            int tvshowEpisodes = cursor.getInt(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_EPISODES));
-            int tvshowSeasons = cursor.getInt(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_SEASONS));
-            int tvshowDuration = cursor.getInt(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_DURATION));
-            Tvshow tvshow = new Tvshow(tvshowId, tvshowTitle, tvshowDescription, tvshowPath, tvshowEpisodes, tvshowSeasons, tvshowDuration);
+            int tvshowRating = cursor.getInt(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_RATING));
+            String tvshowDateAdded = cursor.getString(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_DATEADDED));
+            String tvshowStatus = cursor.getString(cursor.getColumnIndexOrThrow(MySQLiteHelper.COLUMN_TVSHOW_STATUS));
+            Tvshow tvshow = new Tvshow(tvshowId, tvshowTitle, tvshowDescription, tvshowPath, tvshowRating, tvshowDateAdded, tvshowStatus);
 
             return tvshow;
         } catch(CursorIndexOutOfBoundsException exception) {

@@ -13,16 +13,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database info
     private static final String DATABASE_NAME = "TVtracker.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     // Assignments
     public static final String TABLE_TVSHOWS = "tvshows";
     public static final String COLUMN_TVSHOW_ID = "tvshow_id";
     public static final String COLUMN_TVSHOW = "tvshow";
     public static final String COLUMN_TVSHOW_DESCRIPTION = "description";
     public static final String COLUMN_TVSHOW_IMGPATH = "imgpath";
-    public static final String COLUMN_TVSHOW_EPISODES = "episodes";
-    public static final String COLUMN_TVSHOW_SEASONS = "seasons";
-    public static final String COLUMN_TVSHOW_DURATION = "duration";
+    public static final String COLUMN_TVSHOW_RATING = "rating";
+    public static final String COLUMN_TVSHOW_DATEADDED = "dateadded";
+    public static final String COLUMN_TVSHOW_STATUS = "status";
 
     // Creating the table
     private static final String DATABASE_CREATE_TVSHOWS =
@@ -32,9 +32,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                     COLUMN_TVSHOW + " text not null, " +
                     COLUMN_TVSHOW_DESCRIPTION + " text, " +
                     COLUMN_TVSHOW_IMGPATH + " text, " +
-                    COLUMN_TVSHOW_EPISODES + " integer, " +
-                    COLUMN_TVSHOW_SEASONS + " integer, " +
-                    COLUMN_TVSHOW_DURATION + " integer" +
+                    COLUMN_TVSHOW_RATING + " integer, " +
+                    COLUMN_TVSHOW_DATEADDED + " text, " +
+                    COLUMN_TVSHOW_STATUS + " text" +
                     ");";
 
     // Mandatory constructor which passes the context, database name and database version and passes it to the parent

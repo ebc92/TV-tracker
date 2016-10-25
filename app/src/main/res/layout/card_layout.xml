@@ -56,7 +56,9 @@
                     android:rating="3"
                     android:numStars="5"
                     android:stepSize="1"
-                    android:theme="@style/RatingBar" />
+                    android:theme="@style/RatingBar"
+                    android:clickable="false"
+                    android:isIndicator="true"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

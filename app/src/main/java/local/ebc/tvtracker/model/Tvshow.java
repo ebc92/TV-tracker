@@ -11,19 +11,19 @@ public class Tvshow implements Serializable{
     private String title;
     private String description;
     private String imgPath;
-    private int episodes;
-    private int seasons;
-    private int duration;
+    private int rating;
+    private String dateadded;
+    private String status;
 
 
-    public Tvshow(long id, String title, String description, String imgPath, int episodes, int seasons, int duration) {
+    public Tvshow(long id, String title, String description, String imgPath, int rating, String dateadded, String status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.imgPath = imgPath;
-        this.episodes = episodes;
-        this.seasons = seasons;
-        this.duration = duration;
+        this.rating = rating;
+        this.dateadded = dateadded;
+        this.status = status;
     }
 
     public Tvshow(Tvshow tvshow){
@@ -31,9 +31,9 @@ public class Tvshow implements Serializable{
         this.title = tvshow.getTitle();
         this.description = tvshow.getDescription();
         this.imgPath = tvshow.getImgPath();
-        this.episodes = tvshow.getEpisodes();
-        this.seasons = tvshow.getSeasons();
-        this.duration = tvshow.getDuration();
+        this.rating = tvshow.getRating();
+        this.dateadded = tvshow.getDateadded();
+        this.status = tvshow.getStatus();
     }
 
     public String getTitle() {
@@ -68,28 +68,28 @@ public class Tvshow implements Serializable{
         this.id = id;
     }
 
-    public int getEpisodes() {
-        return episodes;
+    public int getRating() {
+        return rating;
     }
 
-    public void setEpisodes(int episodes) {
-        this.episodes = episodes;
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
-    public int getSeasons() {
-        return seasons;
+    public String getDateadded() {
+        return dateadded;
     }
 
-    public void setSeasons(int seasons) {
-        this.seasons = seasons;
+    public void setDateadded(String dateadded) {
+        this.dateadded = dateadded;
     }
 
-    public int getDuration() {
-        return duration;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

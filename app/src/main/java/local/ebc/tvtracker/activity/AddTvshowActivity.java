@@ -11,14 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.tangxiaolv.telegramgallery.GalleryActivity;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,9 +38,10 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
     EditText editTextDescription;
     ImageView imageView;
     String path;
-    NumberPicker np_e;
-    NumberPicker np_s;
-    NumberPicker np_d;
+    RatingBar ratingBar;
+    String dateAdded;
+    Spinner statusSpinner;
+
     Boolean pathSet;
 
 
@@ -49,9 +55,16 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         editTextDescription = (EditText) findViewById(R.id.editTextDescription);
         imageView = (ImageView) findViewById(R.id.imageView);
+        statusSpinner = (Spinner) findViewById(R.id.spinner);
+        ratingBar = (RatingBar) findViewById(R.id.tvshow_rating_bar_add);
+
         datasource = new DataSource(this);
         pathSet = false;
 
+        ArrayAdapter statusAdapter = ArrayAdapter.createFromResource(this,
+                R.array.tvshow_status, android.R.layout.simple_spinner_item);
+        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        statusSpinner.setAdapter(statusAdapter);
 
         //OnClickListener for the picture gallery activity
         imageView.setOnClickListener(new View.OnClickListener(){
@@ -75,13 +88,14 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
                     dialog.show();
                 }
                 if (pathSet) {
-                    int episodes = np_e.getValue();
-                    int seasons = np_s.getValue();
-                    int duration = np_d.getValue();
-                    Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), editTextDescription.getText().toString(), path, episodes, seasons, duration);
-                    long tvshowId = datasource.createTvshow(tvshow);
+                    dateAdded = getSimpleCurrentDate();
+                    int rating = Math.round(ratingBar.getRating());
+                    String ipsumdescription = "Lorem ipsum dolor sit amet, eam admodum legendos posidonium et, pro agam suavitate referrentur ut. Qui et utinam omnium nonumes, clita veniam vis ut.";
+                    //Creating tvshow with dummy description instead.
+                    //Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), editTextDescription.getText().toString(), path, rating, dateAdded, statusSpinner.getSelectedItem().toString());
+                    Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), ipsumdescription, path, rating, dateAdded, statusSpinner.getSelectedItem().toString());
 
-                    Toast toast = Toast.makeText(getApplicationContext(), Long.toString(tvshowId), Toast.LENGTH_LONG);
+                    long tvshowId = datasource.createTvshow(tvshow);
                     Intent data = new Intent();
                     data.putExtra(MainActivity.EXTRA_TVSHOW_ID, tvshowId);
                     //Send the result back to the activity
@@ -109,8 +123,16 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
         if(imgFile.exists()){
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             imageView.setImageBitmap(myBitmap);
-
         }
+    }
+
+    private static String getSimpleCurrentDate() {
+        // Formatter that will convert dates into the day-month-year format
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        //Today's date, but with time included, which we don't want
+        Date today = new Date();
+        // Format.format returns a string
+        return format.format(today);
     }
 
 
