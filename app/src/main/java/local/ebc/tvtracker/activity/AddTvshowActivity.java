@@ -51,7 +51,9 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_add_tvshow);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
+       // getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         editTextDescription = (EditText) findViewById(R.id.editTextDescription);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -105,6 +107,7 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
                 }
             }
         });
+
     }
 
     @Override

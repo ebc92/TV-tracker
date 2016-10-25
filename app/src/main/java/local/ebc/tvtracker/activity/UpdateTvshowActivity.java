@@ -46,14 +46,7 @@ public class UpdateTvshowActivity extends AppCompatActivity {
         editTextTitle.setText(tvshow.getTitle());
         editTextDescription.setText(tvshow.getDescription());
         path = tvshow.getImgPath();
-        File imgFile = new File(tvshow.getImgPath());
-        Bitmap myBitmap;
-        if(imgFile.exists()){
-            myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            imageView.setImageBitmap(myBitmap);
-        } else {
-            imageView.setImageResource(R.mipmap.ic_launcher);
-        }
+
 
         //OnClickListener for the picture gallery activity
         imageView.setOnClickListener(new View.OnClickListener(){

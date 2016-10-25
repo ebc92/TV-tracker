@@ -11,4 +11,5 @@
         <item>Finished</item>
     </string-array>
     <string name="title_activity_tvshow_details">TV Show details</string>
+    <string name="title_activity_test">test</string>
 </resources>

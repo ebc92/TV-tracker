@@ -11,8 +11,8 @@
         android:showDividers="beginning|end"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/margin_card_vertical"
+        android:layout_marginTop="@dimen/margin_card_vertical"
         card_view:cardBackgroundColor="@color/cardview_light_background"
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="8dp">
