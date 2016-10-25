@@ -52,22 +52,6 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
         datasource = new DataSource(this);
         pathSet = false;
 
-        //Setting up the numberpickers
-        np_e = (NumberPicker) findViewById(R.id.np_episodes);
-        np_s = (NumberPicker) findViewById(R.id.np_seasons);
-        np_d = (NumberPicker) findViewById(R.id.np_duration);
-        np_e.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        np_e.setMinValue(0);
-        np_e.setMaxValue(40);
-        np_e.setWrapSelectorWheel(false);
-        np_s.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        np_s.setMinValue(0);
-        np_s.setMaxValue(100);
-        np_s.setWrapSelectorWheel(false);
-        np_d.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        np_d.setMinValue(0);
-        np_d.setMaxValue(60);
-        np_d.setWrapSelectorWheel(false);
 
         //OnClickListener for the picture gallery activity
         imageView.setOnClickListener(new View.OnClickListener(){

@@ -8,10 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@mipmap/ic_launcher"
-            android:id="@+id/tvshow_icon_imageView"/>
+            android:id="@+id/tvshow_icon_imageView"
+            android:layout_marginTop="@dimen/margin_listview_icon"
+            android:layout_marginBottom="@dimen/margin_listview_icon"
+            android:layout_marginLeft="@dimen/margin_listview_icon"
+            android:layout_marginRight="@dimen/margin_listview_icon"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,9 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TV Show Title"
-                android:textSize="26dp"
+                android:textSize="32sp"
                 android:textStyle="italic"
-                android:layout_marginBottom="16dp"
                 android:id="@+id/tvshow_title_text"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,11 +35,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textSize="12dp"
-                    android:id="@+id/tvshow_description_text"
+                    android:text="Date added: 25/10/16"
+                    android:textSize="12sp"
+                    android:id="@+id/tvshow_date_text"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"/>
+                    android:layout_marginRight="@dimen/activity_vertical_margin" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,20 +47,16 @@
                     android:textSize="12sp"
                     android:id="@+id/tvshow_status_text"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"/><TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rating: 8.6/10"
-                    android:textSize="12sp"
-                    android:id="@+id/tvshow_rating_text"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
                     android:layout_marginRight="@dimen/activity_vertical_margin"/>
-                <ProgressBar
-                    style="?android:attr/progressBarStyleHorizontal"
+
+                <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progressBar"
-                    android:layout_weight="1" />
+                    android:id="@+id/tvshow_rating_bar"
+                    android:rating="3"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:theme="@style/RatingBar" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

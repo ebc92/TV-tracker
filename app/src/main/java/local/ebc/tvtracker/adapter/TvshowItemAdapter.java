@@ -73,7 +73,7 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView title;
-        private final TextView description;
+        private final TextView date;
         private final TextView status;
         private final ImageView icon;
 
@@ -82,7 +82,7 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
             super(view);
 
             title = (TextView) view.findViewById(R.id.tvshow_title_text);
-            description = (TextView) view.findViewById(R.id.tvshow_description_text);
+            date = (TextView) view.findViewById(R.id.tvshow_date_text);
             status = (TextView) view.findViewById(R.id.tvshow_status_text);
             icon = (ImageView) view.findViewById(R.id.tvshow_icon_imageView);
 
@@ -93,30 +93,21 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, DetailsActivity.class);
-// Get the correct game based on which listitem got clicked, and put it as parameter in the intent
+            // Get the correct game based on which listitem got clicked, and put it as parameter in the intent
             Tvshow tvshow = getItem(getAdapterPosition());
             Log.d("ITEM", Integer.toString(getAdapterPosition()));
             intent.putExtra("selectedTvshow", tvshow);
-// Open GameDetailsActivity
+            // Open GameDetailsActivity
             context.startActivity(intent);
         }
 
 
         public void populateRow(Tvshow tvshow) {
             title.setText(tvshow.getTitle());
-            description.setText(tvshow.getDescription());
+            date.setText(tvshow.getDescription());
             status.setText("Status: Watching");
             Glide.with(itemView.getContext()).load(tvshow.getImgPath()).into(icon);
-           /* Bitmap bmp = BitmapFactory.decodeFile(tvshow.getImgPath());
-            icon.setImageBitmap(bmp);
-           imgThumbnail = new File(tvshow.getImgPath());
-            if(imgThumbnail.exists()){
-                Bitmap imgBitmap = BitmapFactory.decodeFile(imgThumbnail.getAbsolutePath());
-                icon.setImageBitmap(imgBitmap);
 
-            } else {
-                icon.setImageResource(R.mipmap.ic_launcher);
-            } */
         }
     }
 }

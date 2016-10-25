@@ -3,7 +3,7 @@ package local.ebc.tvtracker.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.support.v4.app.FragmentManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +19,9 @@ import local.ebc.tvtracker.adapter.TvshowItemAdapter;
 import local.ebc.tvtracker.database.DataSource;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.R;
+import local.ebc.tvtracker.utility.ConfirmDeleteDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConfirmDeleteDialog.ConfirmDeleteDialogListener{
     public static final String EXTRA_TVSHOW_ID = "extraTvshowId";
     DataSource datasource;
     List<Tvshow> tvshowList;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent intent = new Intent(MainActivity.this, AddTvshowActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddTvshowActivity.class);
                 startActivityForResult(intent, 11);
             }
         });
@@ -53,11 +54,17 @@ public class MainActivity extends AppCompatActivity {
         tvshowListView.setAdapter(adapter);
         tvshowListRefresh();
     }
-    private void tvshowListRefresh(){
+
+    private void tvshowListRefresh() {
         datasource = new DataSource(this);
         tvshowList = datasource.getAllTvshows();
         adapter.updateList(tvshowList);
         adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        tvshowListRefresh();
     }
 
     @Override
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -90,11 +98,37 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        if (id == R.id.action_delete_all) {
+            // Show the ConfirmDeleteDialog
 
+            DialogFragment dialog = new ConfirmDeleteDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString("message", "You are about to delete all TV shows! Are you sure?");
+            bundle.putString("positiveButton", "Delete All");
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "ConfirmDeleteDialog");
+
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // Create a DBCRUD object, and pass it the context of this activity
+        DataSource datasource = new DataSource(this);
+        // Delete the list of games from Database
+        datasource.deleteAllTvshows();
+        // Remove all games from temporary list
+        tvshowList.removeAll(tvshowList);
+        // Display toast with Feedback
+        //showToast(getString(R.string.action_database_clear));
+        // Notify adapter Content has changed
+        tvshowListRefresh();
+    }
+
+    @Override
+    public void onDialogNegativeClick(android.support.v4.app.DialogFragment dialog) {
+
     }
 }
