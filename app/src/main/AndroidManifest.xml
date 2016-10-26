@@ -44,8 +44,8 @@
                 android:value="local.ebc.tvtracker.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.test"
-            android:label="@string/title_activity_test"
+            android:name=".activity.UpdateTvshowActivity"
+            android:label="Update TV Show"
             android:parentActivityName=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

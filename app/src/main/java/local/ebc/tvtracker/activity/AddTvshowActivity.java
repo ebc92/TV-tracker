@@ -14,35 +14,29 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.RatingBar;
 import android.widget.Spinner;
-import android.widget.Toast;
-
+import com.bumptech.glide.Glide;
 import com.tangxiaolv.telegramgallery.GalleryActivity;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-
 import local.ebc.tvtracker.database.DataSource;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.R;
 
 public class AddTvshowActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    DataSource datasource;
-    EditText editTextTitle;
-    EditText editTextDescription;
-    ImageView imageView;
-    String path;
-    RatingBar ratingBar;
-    String dateAdded;
-    Spinner statusSpinner;
-
-    Boolean pathSet;
+    private DataSource datasource;
+    private EditText editTextTitle;
+    private EditText editTextDescription;
+    private ImageView imageView;
+    private String path;
+    private RatingBar ratingBar;
+    private String dateAdded;
+    private Spinner statusSpinner;
+    private Boolean pathSet;
 
 
     @Override
@@ -51,18 +45,18 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_add_tvshow);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       // getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        pathSet = false;
 
+        //initialize views
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         editTextDescription = (EditText) findViewById(R.id.editTextDescription);
         imageView = (ImageView) findViewById(R.id.imageView);
         statusSpinner = (Spinner) findViewById(R.id.spinner);
         ratingBar = (RatingBar) findViewById(R.id.tvshow_rating_bar_add);
-
         datasource = new DataSource(this);
-        pathSet = false;
 
+        //Fill the spinner with items.
         ArrayAdapter statusAdapter = ArrayAdapter.createFromResource(this,
                 R.array.tvshow_status, android.R.layout.simple_spinner_item);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -92,11 +86,8 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
                 if (pathSet) {
                     dateAdded = getSimpleCurrentDate();
                     int rating = Math.round(ratingBar.getRating());
-                    String ipsumdescription = "Lorem ipsum dolor sit amet, eam admodum legendos posidonium et, pro agam suavitate referrentur ut. Qui et utinam omnium nonumes, clita veniam vis ut.";
-                    //Creating tvshow with dummy description instead.
-                    //Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), editTextDescription.getText().toString(), path, rating, dateAdded, statusSpinner.getSelectedItem().toString());
-                    Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), ipsumdescription, path, rating, dateAdded, statusSpinner.getSelectedItem().toString());
 
+                    Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), editTextDescription.getText().toString(), path, rating, dateAdded, statusSpinner.getSelectedItem().toString());
                     long tvshowId = datasource.createTvshow(tvshow);
                     Intent data = new Intent();
                     data.putExtra(MainActivity.EXTRA_TVSHOW_ID, tvshowId);
@@ -110,6 +101,9 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
 
     }
 
+
+    // Get the chosen icon for the TV Show from the GalleryActivity
+    // and load it into imageView with Glide dependency.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == 21) {
@@ -117,17 +111,9 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
                 List<String> thumb = (List<String>) data.getSerializableExtra(GalleryActivity.PHOTOS);
                 path = thumb.get(0);
                 pathSet = true;
-                makeThumbnail(thumb.get(0));
+                Glide.with(this).load(path).into(imageView);
             }
         }
-    public void makeThumbnail(String path){
-        File imgFile = new File(path);
-
-        if(imgFile.exists()){
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            imageView.setImageBitmap(myBitmap);
-        }
-    }
 
     private static String getSimpleCurrentDate() {
         // Formatter that will convert dates into the day-month-year format

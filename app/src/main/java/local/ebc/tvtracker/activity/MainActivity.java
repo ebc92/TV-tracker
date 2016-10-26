@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.FragmentManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +22,10 @@ import local.ebc.tvtracker.utility.ConfirmDeleteDialog;
 
 public class MainActivity extends AppCompatActivity implements ConfirmDeleteDialog.ConfirmDeleteDialogListener{
     public static final String EXTRA_TVSHOW_ID = "extraTvshowId";
-    DataSource datasource;
-    List<Tvshow> tvshowList;
-    RecyclerView tvshowListView;
-    TvshowItemAdapter adapter;
+    private DataSource datasource;
+    private List<Tvshow> tvshowList;
+    private RecyclerView tvshowListView;
+    private TvshowItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
             }
         });
 
-        tvshowList = new ArrayList<Tvshow>();
-        // tvshowListView = (RecyclerView) findViewByID(R.id.recyclerView_tvshow_list);
+        tvshowList = new ArrayList<>();
         tvshowListView = (RecyclerView) findViewById(R.id.recyclerView_tvshow_list);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         tvshowListView.setLayoutManager(mLayoutManager);
@@ -69,9 +67,8 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //TODO: resultcode && requestcode
         if (requestCode == 11 && resultCode == RESULT_OK) {
-            long tvshowId = data.getLongExtra(EXTRA_TVSHOW_ID, -1);
+            int tvshowId = data.getIntExtra(EXTRA_TVSHOW_ID, -1);
             if (tvshowId != -1) {
                 datasource = new DataSource(this);
                 Tvshow tvshow = datasource.getTvshow(tvshowId);
@@ -99,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
         int id = item.getItemId();
 
         if (id == R.id.action_delete_all) {
-            // Show the ConfirmDeleteDialog
-
+            //showing the deletedialog
             DialogFragment dialog = new ConfirmDeleteDialog();
             Bundle bundle = new Bundle();
             bundle.putString("message", "You are about to delete all TV shows! Are you sure?");

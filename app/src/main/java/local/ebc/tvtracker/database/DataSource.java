@@ -118,10 +118,10 @@ public class DataSource {
             return null;
         }
     }
-    public Tvshow getTvshow(long columnId) {
+    public Tvshow getTvshow(int columnId) {
         if (!database.isOpen())
             open();
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_TVSHOWS, tvshowAllColumns, MySQLiteHelper.COLUMN_TVSHOW_ID + "=?", new String[] { Long.toString(columnId)}, null, null, null);
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_TVSHOWS, tvshowAllColumns, MySQLiteHelper.COLUMN_TVSHOW_ID + "=?", new String[] { Integer.toString(columnId)}, null, null, null);
         cursor.moveToFirst();
         Tvshow tvshow = cursorToTvshow(cursor);
         cursor.close();
