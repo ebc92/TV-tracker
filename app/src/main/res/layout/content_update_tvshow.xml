@@ -10,7 +10,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="local.ebc.tvtracker.activity.UpdateTvshowActivity"
     tools:showIn="@layout/activity_update_tvshow">
-
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +18,6 @@
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="8dp"
         card_view:cardUseCompatPadding="true">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,10 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
                 android:id="@+id/activity_update_title"
                 android:textSize="36sp"
-                android:singleLine="true" />
+                android:maxLines="1" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,21 +48,19 @@
                     android:id="@+id/activity_update_status"
                     android:layout_marginLeft="12dp"/>
             </LinearLayout>
-
             <ImageView
                 android:layout_width="200dp"
                 android:id="@+id/activity_update_imageView"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_height="200dp" />
-
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/activity_update_description"
                 android:layout_marginLeft="@dimen/margin_label_np"
-                android:layout_marginRight="@dimen/margin_label_np"/>
-
+                android:layout_marginRight="@dimen/margin_label_np"
+                android:maxLines="5"/>
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

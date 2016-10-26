@@ -16,14 +16,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TV Show Title"
-                android:textSize="48dp"
+                android:textSize="48sp"
                 android:textStyle="italic"
                 android:id="@+id/tvshow_title_text"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status"
                 android:textSize="12sp"
                 android:id="@+id/tvshow_date_text"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
@@ -31,7 +29,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status"
                 android:textSize="12sp"
                 android:id="@+id/tvshow_status_text"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
@@ -44,12 +41,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textSize="12dp"
+                    android:textSize="12sp"
                     android:id="@+id/tvshow_description_text"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"
                     android:layout_marginRight="@dimen/activity_vertical_margin" />
-                                <RatingBar
+                <RatingBar
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvshow_details_ratingBar"
@@ -59,6 +55,4 @@
                     android:theme="@style/RatingBar" />
             </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>

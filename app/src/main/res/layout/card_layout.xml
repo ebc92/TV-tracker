@@ -4,10 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin_card_vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <ImageView
+            android:contentDescription="icon"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@mipmap/ic_launcher"
@@ -24,7 +22,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TV Show Title"
                 android:textSize="32sp"
                 android:textStyle="italic"
                 android:id="@+id/tvshow_title_text"/>
@@ -35,7 +32,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Date added: 25/10/16"
                     android:textSize="12sp"
                     android:id="@+id/tvshow_date_text"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"
@@ -43,7 +39,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status"
                     android:textSize="12sp"
                     android:id="@+id/tvshow_status_text"
                     android:layout_marginLeft="@dimen/activity_vertical_margin"
@@ -61,7 +56,4 @@
                     android:isIndicator="true"/>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-
 </LinearLayout>

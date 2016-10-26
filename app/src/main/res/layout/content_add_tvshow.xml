@@ -28,13 +28,15 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/editTextTitle"
-                android:hint="Name" />
+                android:hint="Name"
+                android:maxLines="1"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/editTextDescription"
-                android:hint="Description" />
+                android:hint="Description"
+                android:maxLines="5"/>
             <ImageView
                 android:layout_width="300dp"
                 app:srcCompat="@mipmap/ic_launcher"
@@ -53,6 +55,5 @@
                 android:stepSize="1"
                 android:theme="@style/RatingBar" />
         </LinearLayout>
-
 </android.support.v7.widget.CardView>
 </LinearLayout>
