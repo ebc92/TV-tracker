@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import local.ebc.tvtracker.R;
 import local.ebc.tvtracker.database.DataSource;
+import local.ebc.tvtracker.fragment.AdvertFragment;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.utility.ConfirmDeleteDialog;
 
@@ -27,7 +31,7 @@ public class TvshowDetailsActivity extends AppCompatActivity implements ConfirmD
     private RatingBar rating;
     private TextView dateAdded;
     private TextView status;
-
+    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,11 @@ public class TvshowDetailsActivity extends AppCompatActivity implements ConfirmD
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Fragment fragment = new AdvertFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.add(R.id.activity_details_adContainer, fragment, "ad_ini");
+        transaction.commit();
 
         //get the tvshow object from the intent
         tvshow = (Tvshow) getIntent().getSerializableExtra("selectedTvshow");

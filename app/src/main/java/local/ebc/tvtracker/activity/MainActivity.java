@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +19,14 @@ import java.util.List;
 
 import local.ebc.tvtracker.adapter.TvshowItemAdapter;
 import local.ebc.tvtracker.database.DataSource;
+import local.ebc.tvtracker.fragment.AdvertFragment;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.R;
 import local.ebc.tvtracker.utility.ConfirmDeleteDialog;
 
 public class MainActivity extends AppCompatActivity implements ConfirmDeleteDialog.ConfirmDeleteDialogListener{
     public static final String EXTRA_TVSHOW_ID = "extraTvshowId";
+    FragmentTransaction transaction;
     private DataSource datasource;
     private List<Tvshow> tvshowList;
     private RecyclerView tvshowListView;
@@ -42,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
                 startActivityForResult(intent, 11);
             }
         });
+
+        Fragment fragment = new AdvertFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.add(R.id.advertisment_container, fragment, "ad_ini");
+        transaction.commit();
 
         tvshowList = new ArrayList<>();
         tvshowListView = (RecyclerView) findViewById(R.id.recyclerView_tvshow_list);
