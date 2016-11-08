@@ -94,7 +94,6 @@ public class UpdateTvshowActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
     // Handle new thumbnail picks in the gallery activity.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

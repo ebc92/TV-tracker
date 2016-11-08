@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
         });
 
         /* The fragmentLoad method is called to load the progress bar fragment.
-        Then the TV show list and recycler view is initialized.
-        */
+        Then the TV show list and recycler view is initialized.*/
         fragmentLoad();
         tvshowList = new ArrayList<>();
         tvshowListView = (RecyclerView) findViewById(R.id.recyclerView_tvshow_list);
@@ -136,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     /* If the user agrees, all tvshows will be deleted from the
     local list and the local database. The user is notified with
