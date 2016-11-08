@@ -29,7 +29,7 @@ import local.ebc.tvtracker.model.Tvshow;
 
 public class UpdateTvshowActivity extends AppCompatActivity {
 
-    //declaring views
+    //Declare global activity variables
     private EditText editTextTitle;
     private EditText editTextDescription;
     private ImageView imageView;
@@ -79,10 +79,12 @@ public class UpdateTvshowActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //getting the view values and updating the database object.
+                // Get the view values and update the database.
                 int rating = Math.round(ratingBar.getRating());
                 Tvshow tvshowNew = new Tvshow(tvshow.getId(), editTextTitle.getText().toString(), editTextDescription.getText().toString(), tvshow.getImgPath(), rating, tvshow.getDateadded(), statusSpinner.getSelectedItem().toString());
                 datasource.updateTvshow(tvshowNew);
+
+                //Send the updated tvshow back to the details activity.
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("selectedTvshow", tvshowNew);
                 setResult(Activity.RESULT_OK, resultIntent);
@@ -92,6 +94,8 @@ public class UpdateTvshowActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+    // Handle new thumbnail picks in the gallery activity.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == 31) {

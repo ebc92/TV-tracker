@@ -14,17 +14,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import local.ebc.tvtracker.adapter.TvshowItemAdapter;
 import local.ebc.tvtracker.database.DataSource;
-import local.ebc.tvtracker.fragment.AdvertFragment;
+import local.ebc.tvtracker.fragment.ProgressFragment;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.R;
 import local.ebc.tvtracker.utility.ConfirmDeleteDialog;
 
 public class MainActivity extends AppCompatActivity implements ConfirmDeleteDialog.ConfirmDeleteDialogListener{
+
+    //Declare global activity variables.
     public static final String EXTRA_TVSHOW_ID = "extraTvshowId";
     FragmentTransaction transaction;
     private DataSource datasource;
@@ -39,23 +43,30 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /* Android Studio generated FloatingActionButton Code.
+        The onClickListener starts the "Add new TV show" activity.
+         */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddTvshowActivity.class);
-                startActivityForResult(intent, 11);
+                startActivity(intent);
             }
         });
 
-        Fragment fragment = new AdvertFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        transaction.add(R.id.advertisment_container, fragment, "ad_ini");
-        transaction.commit();
-
+        /* The fragmentLoad method is called to load the progress bar fragment.
+        Then the TV show list and recycler view is initialized.
+        */
+        fragmentLoad();
         tvshowList = new ArrayList<>();
         tvshowListView = (RecyclerView) findViewById(R.id.recyclerView_tvshow_list);
+
+
+        /* First he layout manager is assigned to the recycler view. Then The adapter
+        is initialized with the tvshowList and assigned to the recycler view.
+        Finally, the datasource is refreshed with tvshowListRefresh method.
+         */
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         tvshowListView.setLayoutManager(mLayoutManager);
         tvshowListView.setHasFixedSize(true);
@@ -64,32 +75,37 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
         tvshowListRefresh();
     }
 
+    /* Load or refresh the fragment. Fragment is added with .replace
+    (over e.g. .add or .attach) to prevent duplicate fragments.
+     */
+    private void fragmentLoad(){
+        Fragment fragment = new ProgressFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.advertisment_container, fragment, "ad_ini");
+        transaction.commit();
+    }
+
+    /* Create a new instance of the datasource and
+    retrieve all tvshows. The tvshows is stored in
+    the array tvshowList. The adapter is notified.
+    */
     private void tvshowListRefresh() {
         datasource = new DataSource(this);
         tvshowList = datasource.getAllTvshows();
         adapter.updateList(tvshowList);
         adapter.notifyDataSetChanged();
     }
+
+    /* The list and the fragment is refreshed in case the
+    data has changed while the activity has been paused.
+    This also eliminates the needs for onResult handling.
+    */
     @Override
     public void onResume() {
         super.onResume();
         tvshowListRefresh();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 11 && resultCode == RESULT_OK) {
-            int tvshowId = data.getIntExtra(EXTRA_TVSHOW_ID, -1);
-            if (tvshowId != -1) {
-                datasource = new DataSource(this);
-                Tvshow tvshow = datasource.getTvshow(tvshowId);
-                tvshowList.add(tvshow);
-                tvshowListRefresh();
-            }
-        }
-        if (requestCode == 31 && resultCode == RESULT_OK) {
-            adapter.notifyDataSetChanged();
-        }
+        fragmentLoad();
     }
 
     @Override
@@ -99,11 +115,13 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
         return true;
     }
 
+    // Show option dialog if "Delete all" button is clicked.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        /* Handle action bar item clicks here. The action bar will
+        automatically handle clicks on the Home/Up button, so long
+        as you specify a parent activity in AndroidManifest.xml.
+       */
         int id = item.getItemId();
 
         if (id == R.id.action_delete_all) {
@@ -120,22 +138,23 @@ public class MainActivity extends AppCompatActivity implements ConfirmDeleteDial
     }
 
 
+    /* If the user agrees, all tvshows will be deleted from the
+    local list and the local database. The user is notified with
+    a toast. List and fragment is refreshed.
+     */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        // Create a DBCRUD object, and pass it the context of this activity
         DataSource datasource = new DataSource(this);
-        // Delete the list of games from Database
         datasource.deleteAllTvshows();
-        // Remove all games from temporary list
         tvshowList.removeAll(tvshowList);
-        // Display toast with Feedback
-        //showToast(getString(R.string.action_database_clear));
-        // Notify adapter Content has changed
+        Toast toast = Toast.makeText(this, "All TV shows has been deleted.", Toast.LENGTH_LONG);
+        toast.show();
         tvshowListRefresh();
+        fragmentLoad();
     }
 
     @Override
     public void onDialogNegativeClick(android.support.v4.app.DialogFragment dialog) {
-
+        //Nothing happens
     }
 }

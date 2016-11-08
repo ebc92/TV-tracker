@@ -28,6 +28,7 @@ import local.ebc.tvtracker.R;
 
 public class AddTvshowActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    //Declare global activity variables.
     private DataSource datasource;
     private EditText editTextTitle;
     private EditText editTextDescription;
@@ -37,7 +38,6 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
     private String dateAdded;
     private Spinner statusSpinner;
     private Boolean pathSet;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,11 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                /* The app is not pretty without pictures so thumbnails are required.
+                If the path for a picture on the local device has not been set, the user
+                is asked to do so.
+                 */
                 if (!pathSet){
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddTvshowActivity.this);
 
@@ -84,16 +89,18 @@ public class AddTvshowActivity extends AppCompatActivity implements AdapterView.
                     dialog.show();
                 }
                 if (pathSet) {
+
+                    /* If the thumbnail has been set, the TV show object
+                    is built from the view data and added to the database.
+                     */
                     dateAdded = getSimpleCurrentDate();
                     int rating = Math.round(ratingBar.getRating());
-
                     Tvshow tvshow = new Tvshow(0, editTextTitle.getText().toString(), editTextDescription.getText().toString(), path, rating, dateAdded, statusSpinner.getSelectedItem().toString());
-                    long tvshowId = datasource.createTvshow(tvshow);
-                    Intent data = new Intent();
-                    data.putExtra(MainActivity.EXTRA_TVSHOW_ID, tvshowId);
-                    //Send the result back to the activity
-                    setResult(Activity.RESULT_OK, data);
-                    //Finish this activity
+                    datasource.createTvshow(tvshow);
+
+                    /* Activity result handling. Go back to
+                    parent (main) activity. */
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }
             }

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import java.io.File;
 import java.util.List;
 import local.ebc.tvtracker.activity.TvshowDetailsActivity;
 import local.ebc.tvtracker.model.Tvshow;
@@ -23,7 +22,6 @@ import local.ebc.tvtracker.R;
 public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.ViewHolder> {
     private final List<Tvshow> tvshowArrayList;
     private final Context context;
-    File imgThumbnail;
 
     public TvshowItemAdapter(List<Tvshow> list, Context context){
         tvshowArrayList = list;
@@ -42,16 +40,18 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
         holder.populateRow(getItem(position));
     }
 
-
+    //Get the TV show count.
     @Override
     public int getItemCount() {
         return tvshowArrayList.size() ;
     }
 
+    //Get the TV show using the position
     private Tvshow getItem(int position) {
         return tvshowArrayList.get(position);
     }
 
+    //Get the TV show ID using the position.
     @Override
     public long getItemId(int position) {
         return tvshowArrayList.get(position).getId();
@@ -63,6 +63,11 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
         tvshowArrayList.addAll(newlist);
     }
 
+
+    /* The ViewHolder is used so that the findViewById results
+    can be cached. This allows for resource friendly recycling in
+    the recycler view when it is scrolled.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final TextView title;
@@ -85,17 +90,23 @@ public class TvshowItemAdapter extends RecyclerView.Adapter<TvshowItemAdapter.Vi
         }
 
 
+        /* If a recycler view item is clicked, the position is retrieved.
+        The details activity is started and the position is sent to the
+        activity with an intent.
+         */
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, TvshowDetailsActivity.class);
-            // Get the correct game based on which listitem got clicked, and put it as parameter in the intent
             Tvshow tvshow = getItem(getAdapterPosition());
             intent.putExtra("selectedTvshow", tvshow);
-            // Open GameDetailsActivity
             context.startActivity(intent);
         }
 
 
+        /* When the method recieves a TV show object,
+        it takes the data from the object and puts it in
+        the views.
+         */
         public void populateRow(Tvshow tvshow) {
             title.setText(tvshow.getTitle());
             String dateText = "Date added: " + tvshow.getDateadded();

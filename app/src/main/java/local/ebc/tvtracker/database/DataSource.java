@@ -53,7 +53,6 @@ public class DataSource {
         }
         return insertId;
     }
-
     public void deleteTvshow(Tvshow tvshow) {
         if (!database.isOpen())
             open();
@@ -68,7 +67,6 @@ public class DataSource {
         if (database.isOpen())
             close();
     }
-
     public void updateTvshow(Tvshow tvshow) {
         if (!database.isOpen())
             open();
@@ -129,4 +127,7 @@ public class DataSource {
             close();
         return tvshow;
     }
+
+
+
 }

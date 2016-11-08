@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import local.ebc.tvtracker.R;
 import local.ebc.tvtracker.database.DataSource;
-import local.ebc.tvtracker.fragment.AdvertFragment;
+import local.ebc.tvtracker.fragment.ProgressFragment;
 import local.ebc.tvtracker.model.Tvshow;
 import local.ebc.tvtracker.utility.ConfirmDeleteDialog;
 
@@ -39,16 +39,14 @@ public class TvshowDetailsActivity extends AppCompatActivity implements ConfirmD
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Fragment fragment = new AdvertFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        transaction.add(R.id.activity_details_adContainer, fragment, "ad_ini");
-        transaction.commit();
+        //Set up the fragment
+        fragmentLoad();
 
         //get the tvshow object from the intent
         tvshow = (Tvshow) getIntent().getSerializableExtra("selectedTvshow");
         setTvshowView();
 
+        //Fab onClick launches the UpdateTvshowActivity.
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +57,25 @@ public class TvshowDetailsActivity extends AppCompatActivity implements ConfirmD
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /* Load or refresh the fragment. Fragment is added with .replace
+    (over e.g. .add or .attach) to prevent duplicate fragments.
+    */
+    private void fragmentLoad(){
+        Fragment fragment = new ProgressFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.activity_details_adContainer, fragment, "ad_ini");
+        transaction.commit();
+    }
+
+
+    //The fragment must be refreshed onResume in case data has changed.
+    @Override
+    public void onResume() {
+        super.onResume();
+        fragmentLoad();
     }
 
     private void setTvshowView() {
@@ -82,6 +99,10 @@ public class TvshowDetailsActivity extends AppCompatActivity implements ConfirmD
         rating.setRating(ratingFloat);
     }
 
+    /* When the data is updated  in the UpdateTvshowAvtivity, onActivityResult
+    fires. A TV show object is built and filled with the data from the intent.
+    The data is then added to the view with the setTvshowView method.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == 22) {
